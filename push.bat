@@ -24,17 +24,27 @@ echo.
 
 "%GIT_CMD%" init
 "%GIT_CMD%" add .
-"%GIT_CMD%" commit -m "랜딩페이지 초기 구현 - plans 기반 완성"
+"%GIT_CMD%" commit -m "랜딩페이지 초기 구현 - plans 기반 완성" 2>nul
 "%GIT_CMD%" branch -M main
-"%GIT_CMD%" remote add origin https://github.com/mylifeishou/vibe-landing-page.git 2>nul
-"%GIT_CMD%" remote set-url origin https://github.com/mylifeishou/vibe-landing-page.git
+"%GIT_CMD%" remote add origin https://github.com/mylifeishou/-222.git 2>nul
+"%GIT_CMD%" remote set-url origin https://github.com/mylifeishou/-222.git
 "%GIT_CMD%" push -u origin main
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo 푸시 중 오류가 발생했습니다. 
-    echo 이미 레포지토리가 있다면 다음 명령어를 시도해보세요:
-    echo "%GIT_CMD%" push -u origin main --force
-    pause
+    echo 1차 푸시 실패. 원격 변경이 있을 수 있어 --force로 재시도합니다...
+    "%GIT_CMD%" push -u origin main --force
+    if %ERRORLEVEL% NEQ 0 (
+        echo.
+        echo 강제 푸시도 실패했습니다. 터미널에서 수동 확인이 필요합니다.
+        pause
+        exit /b 1
+    ) else (
+        echo.
+        echo 강제 푸시 성공.
+    )
+) else (
+    echo.
+    echo 푸시 성공.
 )
 
